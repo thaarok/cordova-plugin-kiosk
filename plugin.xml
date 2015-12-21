@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-homescreen" version="0.1">
-    <name>Custom Android Launcher</name>
+    <name>Custom Android Homescreen / Launcher</name>
     <author>Jan Kalina</author>
-    <description>Cordova Plugin to allow set app as android launcher (home screen)</description>
+    <description>Cordova plugin to set application as Android homescreen / launcher</description>
     <keywords>cordova, launch, launcher, home, homescreen</keywords>
     <engines>
         <engine name="cordova" version=">=3.0.0" />
