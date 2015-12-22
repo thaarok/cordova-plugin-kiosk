@@ -14,3 +14,6 @@ The `AndroidManifest.xml` should be updated immediately. If not, you can force i
 
 You will select which application will be launcher after clicking on Home button - when you will have more launchers, Android will ask you which of them use and allow remember it.
 
+If error "Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occure, try add following into config.xml of application:
+
+    <preference name="loadUrlTimeoutValue" value="99999999" />
