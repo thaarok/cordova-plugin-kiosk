@@ -10,6 +10,7 @@
     </engines>
     
     <platform name="android">
+        <!--
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </config-file>
+        -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:label="StartActivity" android:launchMode="singleTop" android:name="HomeActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon -->
+                    <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
+                    <category android:name="android.intent.category.LAUNCHER" /><!-- Top level app -->
+                </intent-filter>
+            </activity>
+        </config-file>
+        <source-file src="HomeActivity.java" target-dir="src/com/example/hello" />
     </platform>
     
 </plugin>
