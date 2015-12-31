@@ -18,8 +18,15 @@ If error "Application Error - The connection to the server was unsuccessful. (fi
 
     <preference name="loadUrlTimeoutValue" value="99999999" />
 
-Removing application
---------------------
+Tips
+----
+
+**To remove this application use `adb`:** (I do not recommand to install it without USB debug mode enabled!)
 
     $ANDROID_HOME/platform-tools/adb uninstall com.example.hello
+
+**To change launcher (reset setting which launcher is default):**
+
+* **Alcatel:** Settings - Applications - All - (This Application) / Launcher - Clear defaults, after Home press will be asked for default to set
+* **Xiaomi:** Settings - Installed apps - Defaults - Launcher
 

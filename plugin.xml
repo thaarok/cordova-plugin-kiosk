@@ -14,9 +14,8 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </config-file>
         -->
@@ -24,9 +23,8 @@
             <activity android:label="StartActivity" android:launchMode="singleTop" android:name="HomeActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon -->
+                    <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
                     <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
-                    <category android:name="android.intent.category.LAUNCHER" /><!-- Top level app -->
                 </intent-filter>
             </activity>
         </config-file>
