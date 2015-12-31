@@ -38,5 +38,10 @@ public class HomeActivity extends Activity
         layout.addView(button, params);
         setContentView(layout);
     }
+    
+    @Override
+    public void onBackPressed() {
+        // nothing here to disable Back button
+    }
 }
 
