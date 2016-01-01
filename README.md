@@ -16,7 +16,9 @@ You will select which application will be launcher after clicking on Home button
 
 If error "Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occure, try add following into config.xml of application:
 
-    <preference name="loadUrlTimeoutValue" value="99999999" />
+    <preference name="loadUrlTimeoutValue" value="60000" />
+
+(Timeout is in miliseconds, value 60000 = 60 second)
 
 Tips
 ----
