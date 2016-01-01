@@ -1,4 +1,4 @@
-package com.example.hello;
+package jk.cordova.plugin.homescreen;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class HomeActivity extends Activity {
         button.setText("Click to begin...");
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent serviceIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent serviceIntent = new Intent(HomeActivity.this, getMainActivityClass());
                 HomeActivity.this.startActivity(serviceIntent);
             }
         });
@@ -46,7 +46,7 @@ public class HomeActivity extends Activity {
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
             public void run() {
-                Intent serviceIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent serviceIntent = new Intent(HomeActivity.this, getMainActivityClass());
                 HomeActivity.this.startActivity(serviceIntent);
             }
         }, 20000); // 20 seconds
@@ -55,6 +55,14 @@ public class HomeActivity extends Activity {
     @Override
     public void onBackPressed() {
         // nothing here to disable Back button
+    }
+    
+    private Class getMainActivityClass() {
+        try {
+            return Class.forName(getPackageName() + ".MainActivity"); // MainActivity in package of app (from AndroidManifest.xml)
+        } catch(ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
