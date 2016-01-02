@@ -1,4 +1,4 @@
-Custom Android Homescreen / Launcher
+Cordova Android Homescreen / Launcher
 ====================================
 
 By adding this Cordova plugin the Cordova app becomes the the homescreen (also known as launcher) of Android device.
@@ -12,13 +12,7 @@ The `AndroidManifest.xml` should be updated immediately. If not, you can force i
     cordova platform rm android
     cordova platform add android
 
-You will select which application will be launcher after clicking on Home button - when you will have more launchers, Android will ask you which of them use and allow remember it.
-
-If error "Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occure, try add following into config.xml of application:
-
-    <preference name="loadUrlTimeoutValue" value="60000" />
-
-(Timeout is in miliseconds, value 60000 = 60 second)
+To it work user have to set this application as launcher. (see below)
 
 Tips
 ----
@@ -31,4 +25,17 @@ Tips
 
 * **Alcatel:** Settings - Applications - All - (This Application) / Launcher - Clear defaults, after Home press will be asked for default to set
 * **Xiaomi:** Settings - Installed apps - Defaults - Launcher
+
+**To disable screenlock: ("slide to unlock")**
+
+* **Alcatel:** Settings - Security - Set up screen lock - None
+* **Xiaomi:** Settings - Additional settings - Developer options - Skip screen lock
+
+**"Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occured**
+
+* This can occure when Cordova's MainActivity is started too soon after system bootup. Because this is native HomeActivity here - if you will see this error message, try increase delay in `timer.schedule` in `HomeActivity.java`.
+* Another reason can be the `index.html` is missing.
+* Another reason can be too long loading of `index.html` -- you can set timeout of Cordova's WebView in `config.xml` of application:
+
+    <preference name="loadUrlTimeoutValue" value="60000" />
 

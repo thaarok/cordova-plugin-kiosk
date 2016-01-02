@@ -14,7 +14,7 @@
     <platform name="android">
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:label="HomeActivity" android:launchMode="singleTop" android:name="jk.cordova.plugin.homescreen.HomeActivity">
+            <activity android:label="HomeActivity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:name="jk.cordova.plugin.homescreen.HomeActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
