@@ -8,6 +8,7 @@ import android.widget.*;
 import android.view.Window;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,11 +28,10 @@ public class HomeActivity extends Activity {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         
         Button button = new Button(this);
-        button.setText("Click to begin...");
+        button.setText("Click or press any key to begin...");
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent serviceIntent = new Intent(HomeActivity.this, getMainActivityClass());
-                HomeActivity.this.startActivity(serviceIntent);
+                HomeActivity.this.startMainActivity();
             }
         });
         
@@ -46,20 +46,23 @@ public class HomeActivity extends Activity {
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
             public void run() {
-                Intent serviceIntent = new Intent(HomeActivity.this, getMainActivityClass());
-                HomeActivity.this.startActivity(serviceIntent);
+                HomeActivity.this.startMainActivity();
             }
         }, 20000); // 20 seconds
     }
     
     @Override
-    public void onBackPressed() {
-        // nothing here to disable Back button
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        startMainActivity();
+        return true; // prevent event from being propagated
     }
     
-    private Class getMainActivityClass() {
+    private void startMainActivity() {
         try {
-            return Class.forName(getPackageName() + ".MainActivity"); // MainActivity in package of app (from AndroidManifest.xml)
+            // class MainActivity in package of app (from AndroidManifest.xml)
+            Class mainActivityClass = Class.forName(getPackageName() + ".MainActivity");
+            Intent serviceIntent = new Intent(this, mainActivityClass);
+            startActivity(serviceIntent);
         } catch(ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
