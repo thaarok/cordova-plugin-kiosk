@@ -13,40 +13,15 @@ import android.view.ViewGroup.LayoutParams;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomeActivity extends Activity {
+public class KioskActivity extends CordovaActivity {
     
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        LinearLayout layout = new LinearLayout(this);
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        
-        Button button = new Button(this);
-        button.setText("Click or press any key to begin...");
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                HomeActivity.this.startKioskActivity();
-            }
-        });
-        layout.addView(button, params);
-        
-        setContentView(layout);
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask(){
-            public void run() {
-                HomeActivity.this.startKioskActivity();
-            }
-        }, 20000); // 20 seconds
+        loadUrl(launchUrl);
     }
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        startKioskActivity();
         return true; // prevent event from being propagated
     }
     
@@ -67,11 +42,6 @@ public class HomeActivity extends Activity {
                 }
             }, 500); // 0.5 second
         }
-    }
-    
-    private void startKioskActivity() {
-        Intent serviceIntent = new Intent(this, KioskActivity.class);
-        startActivity(serviceIntent);
     }
 }
 
