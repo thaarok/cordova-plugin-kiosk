@@ -11,7 +11,17 @@
         <engine name="cordova" version=">=3.0.0" />
     </engines>
     
+    <js-module src="kiosk.js" name="kioskPlugin">
+        <clobbers target="window.KioskPlugin" />
+    </js-module>
+    
     <platform name="android">
+        
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="KioskPlugin">
+                <param name="android-package" value="jk.cordova.plugin.kiosk.KioskPlugin" />
+            </feature>
+        </config-file>
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             
@@ -32,7 +42,9 @@
         
         <source-file src="HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
         
     </platform>
     
+
 </plugin>
