@@ -16,6 +16,12 @@ To it work user have to set this application as launcher (see below) and start i
 
 **WARNING** Before installation ensure you have USB debug mode enabled. Without it you can have problem to remove app from device.
 
+Exiting from Kiosk mode using Javascript:
+
+    KioskPlugin.exitKiosk();
+
+For using example see: https://github.com/honza889/cordova-kiosk-demo
+
 Tips
 ----
 
