@@ -1,6 +1,23 @@
 Cordova Kiosk Mode
 ==================
 
+Cordova plugin to create Cordova application with "kiosk mode".
+App with this plugin can be set as Android launcher.
+If app starts as launcher, it will block hardware buttons and statusbar,
+which would allow escape from application.
+
+Escape from app will be possible only by javascript call KioskPlugin.exitKiosk()
+or by uninstallation app using adb. (Keeping USB debug allowed recommended.)
+If applications starts as usual (not as launcher), no restrictions will be applied.
+
+Plugin website: https://github.com/honza889/cordova-plugin-kiosk
+Example app: https://github.com/honza889/cordova-kiosk-demo
+
+**Note for iOS:** This plugin is for Android for now. Support of iOS would be useless, becase this feature is builded in iOS as Guided Access - see Settings - General - Accessibility - Guided Access
+
+About
+-----
+
 By adding this Cordova plugin the Cordova app becomes the the homescreen (also known as launcher) of Android device and will block any atempt of user to escape.
 
 To add plugin into existing Cordova / Phonegap application:

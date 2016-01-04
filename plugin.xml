@@ -4,7 +4,21 @@
     
     <name>Cordova Kiosk Mode</name>
     <author>Jan Kalina</author>
-    <description>Cordova plugin to use Cordova application "in kiosk mode" and as Android launcher</description>
+    <description>
+        Cordova plugin to create Cordova application with "kiosk mode".
+        App with this plugin can be set as Android launcher.
+        If app starts as launcher, it will block hardware buttons and statusbar,
+        which would allow escape from application.
+        Escape from app will be possible only by javascript call KioskPlugin.exitKiosk()
+        or by uninstallation app using adb. (Keeping USB debug allowed recommended.)
+        If applications starts as usual (not as launcher), no restrictions will be applied.
+        
+        Plugin website: https://github.com/honza889/cordova-plugin-kiosk
+        Example app: https://github.com/honza889/cordova-kiosk-demo
+        
+        This plugin is for Android for now. Support of iOS would be useless,
+        becase this feature is builded in iOS as Guided Access.
+    </description>
     <keywords>cordova, launcher, homescreen, kiosk, kiosk mode</keywords>
     
     <engines>
@@ -26,7 +40,7 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             
             <!-- activity to use as launcher - because Cordova app is failing if started while boot -->
-            <activity android:label="Cordova kiosk app launcher" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:name="jk.cordova.plugin.kiosk.HomeActivity">
+            <activity android:label="Cordova kiosk app launcher" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.HomeActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
@@ -35,16 +49,15 @@
             </activity>
             
             <!-- inner activity, replacement of MainActivity with buttons blocked -->
-            <activity android:label="Cordova kiosk app" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:name="jk.cordova.plugin.kiosk.KioskActivity">
+            <activity android:label="Cordova kiosk app" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.KioskActivity">
             </activity>
             
         </config-file>
         
-        <source-file src="HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
-        <source-file src="KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
-        <source-file src="KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="android/HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
         
     </platform>
     
-
 </plugin>
