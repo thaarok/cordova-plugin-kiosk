@@ -14,15 +14,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
+import jk.cordova.plugin.kiosk.KioskActivity;
+import org.json.JSONObject;
 
 public class KioskPlugin extends CordovaPlugin {
     
     public static final String EXIT_KIOSK = "exitKiosk";
     
+    public static final String IS_IN_KIOSK = "isInKiosk";
+    
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try {
-            if (EXIT_KIOSK.equals(action)) {
+            if (IS_IN_KIOSK.equals(action)) {
+                
+                callbackContext.success(Boolean.toString(KioskActivity.running));
+                return true;
+                
+            } else if (EXIT_KIOSK.equals(action)) {
                 
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
