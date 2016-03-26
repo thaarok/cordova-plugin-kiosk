@@ -13,24 +13,22 @@ import android.view.ViewGroup.LayoutParams;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class KioskActivity extends CordovaActivity {
+public class KioskActivity extends oracle.adfmf.Container {
     
     public static boolean running = false;
     
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         running = true;
     }
     
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         running = false;
     }
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.init();
-        loadUrl(launchUrl);
         
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
