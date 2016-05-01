@@ -8,10 +8,14 @@ var KioskPlugin = {
     },
     
     isInKiosk: function (callback) {
+        if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
+            callback(false); // ios not supported - cannot be in kiosk
+            return;
+        }
         exec(function(out){
-            callback(out=="true");
+            callback(out == "true");
         }, function(error){
-            alert("KioskPlugin.isInKiosk failed: "+error);
+            alert("KioskPlugin.isInKiosk failed: " + error);
         }, "KioskPlugin", "isInKiosk", []);
     }
     

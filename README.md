@@ -3,17 +3,17 @@ Cordova Kiosk Mode
 
 Cordova plugin to create Cordova application with "kiosk mode".
 App with this plugin can be set as Android launcher.
-If app starts as launcher, it will block hardware buttons and statusbar,
-which would allow escape from application.
+If app starts as launcher, it blocks hardware buttons and statusbar,
+so the user cannot close the app until the app request it.
 
-Escape from app will be possible only by javascript call KioskPlugin.exitKiosk()
-or by uninstallation app using adb. (Keeping USB debug allowed recommended.)
-If applications starts as usual (not as launcher), no restrictions will be applied.
+Escape from app with this plugin is possible only using javascript call `KioskPlugin.exitKiosk()`
+or by uninstalling app using `adb`. (Keeping USB debug allowed recommended.)
+If applications starts as usual (not as launcher), no restrictions are applied.
 
-Plugin website: https://github.com/honza889/cordova-plugin-kiosk
-Example app: https://github.com/honza889/cordova-kiosk-demo
+* Official plugin website: https://github.com/honza889/cordova-plugin-kiosk
+* Example app: https://github.com/honza889/cordova-kiosk-demo
 
-**Note for iOS:** This plugin is for Android for now. Support of iOS would be useless, becase this feature is builded in iOS as Guided Access - see Settings - General - Accessibility - Guided Access
+**Note for iOS:** This plugin is for Android only for now. Support of iOS would be useless, because this feature is built in iOS as Guided Access (see Settings - General - Accessibility - Guided Access)
 
 About
 -----
@@ -37,7 +37,11 @@ Exiting from Kiosk mode using Javascript:
 
     KioskPlugin.exitKiosk();
 
-For using example see: https://github.com/honza889/cordova-kiosk-demo
+If the app is running in kiosk mode can be detected too:
+
+    KioskPlugin.isInKiosk(function(isInKiosk){ ... });
+
+For complete example see: https://github.com/honza889/cordova-kiosk-demo
 
 Tips
 ----
@@ -54,11 +58,11 @@ Tips
  * **Alcatel:** Settings - Security - Set up screen lock - None
  * **Xiaomi:** Settings - Additional settings - Developer options - Skip screen lock
 
-**"Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occured**
+**"Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occurred**
 
-* This can occure when Cordova's MainActivity is started too soon after system bootup. Because this is native HomeActivity here - if you will see this error message, try increase delay in `timer.schedule` in `HomeActivity.java`.
+* This can occur when Cordova's MainActivity is started too soon after system boot-up. Because this is native HomeActivity here - if you will see this error message, try increase delay in `timer.schedule` in `HomeActivity.java`.
 * Another reason can be the `index.html` is missing.
-* Another reason can be too long loading of `index.html` -- you can set timeout of Cordova's WebView in `config.xml` of application: (value is in miliseconds)
+* Another reason can be too long loading of `index.html` -- you can set timeout of Cordova's WebView in `config.xml` of application: (value is in milliseconds)
 
         <preference name="loadUrlTimeoutValue" value="60000" />
 
