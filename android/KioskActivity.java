@@ -1,6 +1,8 @@
 package jk.cordova.plugin.kiosk;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
@@ -49,6 +51,9 @@ public class KioskActivity extends CordovaActivity {
         if(!hasFocus) {
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
+            
+            ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+            am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
             
             // sametime required to close opened notification area
             Timer timer = new Timer();

@@ -51,7 +51,11 @@
             <!-- inner activity, replacement of MainActivity with buttons blocked -->
             <activity android:label="Cordova kiosk app" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
             </activity>
-            
+                        
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+                <uses-permission android:name="android.permission.REORDER_TASKS"/>
         </config-file>
         
         <source-file src="android/HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
