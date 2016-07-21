@@ -40,7 +40,7 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             
             <!-- activity to use as launcher - because Cordova app is failing if started while boot -->
-            <activity android:label="Cordova kiosk app launcher" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.HomeActivity">
+            <activity android:label="@string/activity_name" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.HomeActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
@@ -49,7 +49,7 @@
             </activity>
             
             <!-- inner activity, replacement of MainActivity with buttons blocked -->
-            <activity android:label="Cordova kiosk app" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
+            <activity android:label="Kiosk activity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
             </activity>
                         
         </config-file>
