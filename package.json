@@ -1,0 +1,28 @@
+{
+  "name": "cordova-plugin-kiosk",
+  "version": "1.0.0",
+  "description": "Cordova plugin to create Cordova application with kiosk mode",
+  "cordova": {
+    "id": "cordova-plugin-kiosk",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/honza889/cordova-plugin-kiosk.git"
+  },
+  "keywords": [
+    "cordova",
+    "android",
+    "kiosk",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Jan Kalina",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/honza889/cordova-plugin-kiosk/issues"
+  },
+  "homepage": "https://github.com/honza889/cordova-plugin-kiosk"
+}
