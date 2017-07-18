@@ -20,6 +20,10 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        if (KioskActivity.running) {
+            finish(); // prevent more instances of kiosk activity
+        }
+        
         LinearLayout layout = new LinearLayout(this);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         

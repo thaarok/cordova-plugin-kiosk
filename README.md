@@ -29,7 +29,7 @@ The `AndroidManifest.xml` should be updated immediately. If not, you can force i
     cordova platform rm android
     cordova platform add android
 
-To it work user have to set this application as launcher (see below) and start it by pressing Home button.
+To it work user have to **set this application as launcher** (see below) and start it by pressing Home button/by restarting device.
 
 **WARNING** Before installation ensure you have USB debug mode enabled. Without it you can have problem to remove app from device.
 
@@ -40,6 +40,10 @@ Exiting from Kiosk mode using Javascript:
 If the app is running in kiosk mode can be detected too:
 
     KioskPlugin.isInKiosk(function(isInKiosk){ ... });
+
+By similar way it is possible to detect whether is application set as launcher:
+
+    KioskPlugin.isSetAsLauncher(function(isLauncher){ ... });
 
 For complete example see: https://github.com/honza889/cordova-kiosk-demo
 

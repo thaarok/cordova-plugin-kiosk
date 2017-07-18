@@ -32,6 +32,11 @@ public class KioskActivity extends CordovaActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.init();
+        
+        if (running) {
+            finish(); // prevent more instances of kiosk activity
+        }
+        
         loadUrl(launchUrl);
         
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
