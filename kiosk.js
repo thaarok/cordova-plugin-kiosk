@@ -29,6 +29,10 @@ var KioskPlugin = {
         }, function(error){
             alert("KioskPlugin.isSetAsLauncher failed: " + error);
         }, "KioskPlugin", "isSetAsLauncher", []);
+    },
+    
+    setAllowedKeys: function (keyCodes) {
+        exec(null, null, "KioskPlugin", "setAllowedKeys", keyCodes);
     }
     
 }

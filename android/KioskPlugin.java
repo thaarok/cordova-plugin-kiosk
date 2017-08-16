@@ -17,12 +17,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import jk.cordova.plugin.kiosk.KioskActivity;
 import org.json.JSONObject;
+import java.lang.Integer;
+import java.util.HashSet;
 
 public class KioskPlugin extends CordovaPlugin {
     
     public static final String EXIT_KIOSK = "exitKiosk";
     public static final String IS_IN_KIOSK = "isInKiosk";
     public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
+    public static final String SET_ALLOWED_KEYS = "setAllowedKeys";
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -48,6 +51,18 @@ public class KioskPlugin extends CordovaPlugin {
                 if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
                     cordova.getActivity().startActivity(chooser);
                 }
+                
+                callbackContext.success();
+                return true;
+                
+            } else if (SET_ALLOWED_KEYS.equals(action)) {
+                
+                System.out.println("setAllowedKeys: " + args.toString());
+                HashSet<Integer> allowedKeys = new HashSet<Integer>();
+                for (int i = 0; i < args.length(); i++) {
+                    allowedKeys.add(args.optInt(i));
+                }
+                KioskActivity.allowedKeys = allowedKeys;
                 
                 callbackContext.success();
                 return true;

@@ -12,20 +12,26 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
+import java.lang.Integer;
+import java.util.Collections;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class KioskActivity extends CordovaActivity {
     
-    public static boolean running = false;
+    public static volatile boolean running = false;
+    public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
     
     protected void onStart() {
         super.onStart();
+        System.out.println("KioskActivity started");
         running = true;
     }
     
     protected void onStop() {
         super.onStop();
+        System.out.println("KioskActivity stopped");
         running = false;
     }
     
@@ -46,7 +52,8 @@ public class KioskActivity extends CordovaActivity {
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return true; // prevent event from being propagated
+        System.out.println("onKeyDown event: keyCode = " + event.getKeyCode());
+        return ! allowedKeys.contains(event.getKeyCode()); // prevent event from being propagated if not allowed
     }
     
     // http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
@@ -54,13 +61,15 @@ public class KioskActivity extends CordovaActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if(!hasFocus) {
+            System.out.println("Focus lost - closing system dialogs");
+            
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
             
             ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
             am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
             
-            // sametime required to close opened notification area
+            // sometime required to close opened notification area
             Timer timer = new Timer();
             timer.schedule(new TimerTask(){
                 public void run() {

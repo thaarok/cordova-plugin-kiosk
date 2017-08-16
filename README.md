@@ -6,6 +6,8 @@ App with this plugin can be set as Android launcher.
 If app starts as launcher, it blocks hardware buttons and statusbar,
 so the user cannot close the app until the app request it.
 
+**This plugin does not change behavior of application until it is set as launcher - home screen of the device.**
+
 Escape from app with this plugin is possible only using javascript call `KioskPlugin.exitKiosk()`
 or by uninstalling app using `adb`. (Keeping USB debug allowed recommended.)
 If applications starts as usual (not as launcher), no restrictions are applied.
@@ -44,6 +46,10 @@ If the app is running in kiosk mode can be detected too:
 By similar way it is possible to detect whether is application set as launcher:
 
     KioskPlugin.isSetAsLauncher(function(isLauncher){ ... });
+
+Current version allows also to set allowed key codes, so you app can enable volume up/down buttons for example:
+
+    KioskPlugin.setAllowedKeys([ 24, 25 ]);
 
 For complete example see: https://github.com/honza889/cordova-kiosk-demo
 

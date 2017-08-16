@@ -21,6 +21,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         if (KioskActivity.running) {
+            System.out.println("HomeActivity closing because already running");
             finish(); // prevent more instances of kiosk activity
         }
         
