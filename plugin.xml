@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-kiosk" version="0.2">
-    
+
     <name>Cordova Kiosk Mode</name>
     <author>Jan Kalina</author>
     <description>
@@ -12,33 +12,33 @@
         Escape from app will be possible only by javascript call KioskPlugin.exitKiosk()
         or by uninstallation app using adb. (Keeping USB debug allowed recommended.)
         If applications starts as usual (not as launcher), no restrictions will be applied.
-        
+
         Plugin website: https://github.com/honza889/cordova-plugin-kiosk
         Example app: https://github.com/honza889/cordova-kiosk-demo
-        
+
         This plugin is for Android for now. Support of iOS would be useless,
         becase this feature is builded in iOS as Guided Access.
     </description>
     <keywords>cordova, launcher, homescreen, kiosk, kiosk mode</keywords>
-    
+
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    
+
     <js-module src="kiosk.js" name="kioskPlugin">
         <clobbers target="window.KioskPlugin" />
     </js-module>
-    
+
     <platform name="android">
-        
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="KioskPlugin">
                 <param name="android-package" value="jk.cordova.plugin.kiosk.KioskPlugin" />
             </feature>
         </config-file>
-        
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            
+
             <!-- activity to use as launcher - because Cordova app is failing if started while boot -->
             <activity android:label="@string/activity_name" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.HomeActivity">
                 <intent-filter>
@@ -47,21 +47,28 @@
                     <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
                 </intent-filter>
             </activity>
-            
+
             <!-- inner activity, replacement of MainActivity with buttons blocked -->
             <activity android:label="Kiosk activity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
             </activity>
-                        
+
+            <!-- autorun after the app APK is updated -->
+            <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                </intent-filter>
+            </receiver>
         </config-file>
-        
+
         <config-file target="AndroidManifest.xml" parent="/manifest">
                 <uses-permission android:name="android.permission.REORDER_TASKS"/>
         </config-file>
-        
+
         <source-file src="android/HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
-        
+        <source-file src="android/MyPackageReplacedEventReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
+
     </platform>
-    
+
 </plugin>
