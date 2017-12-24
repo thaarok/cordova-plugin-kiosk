@@ -37,21 +37,20 @@
             </feature>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/activity_name']" mode="merge">
+            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            </activity>
+        </edit-config>
 
-            <!-- activity to use as launcher - because Cordova app is failing if started while boot -->
-            <activity android:label="@string/activity_name" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:name="jk.cordova.plugin.kiosk.HomeActivity">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
                     <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
                 </intent-filter>
-            </activity>
+        </config-file>
 
-            <!-- inner activity, replacement of MainActivity with buttons blocked -->
-            <activity android:label="Kiosk activity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
-            </activity>
-
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <!-- autorun after the app APK is updated -->
             <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
                 <intent-filter>
@@ -64,7 +63,6 @@
                 <uses-permission android:name="android.permission.REORDER_TASKS"/>
         </config-file>
 
-        <source-file src="android/HomeActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/MyPackageReplacedEventReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
