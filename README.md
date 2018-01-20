@@ -12,8 +12,8 @@ Escape from app with this plugin is possible only using javascript call `KioskPl
 or by uninstalling app using `adb`. (Keeping USB debug allowed recommended.)
 If applications starts as usual (not as launcher), no restrictions are applied.
 
-* Official plugin website: https://github.com/honza889/cordova-plugin-kiosk
-* Example app: https://github.com/honza889/cordova-kiosk-demo
+* Official plugin website: https://github.com/hkalina/cordova-plugin-kiosk
+* Example app: https://github.com/hkalina/cordova-kiosk-demo
 
 **Note for iOS:** This plugin is for Android only for now. Support of iOS would be useless, because this feature is built in iOS as Guided Access (see Settings - General - Accessibility - Guided Access)
 
@@ -24,7 +24,7 @@ By adding this Cordova plugin the Cordova app becomes the the homescreen (also k
 
 To add plugin into existing Cordova / Phonegap application:
 
-    cordova plugin add https://github.com/honza889/cordova-plugin-kiosk.git
+    cordova plugin add https://github.com/hkalina/cordova-plugin-kiosk.git
 
 The `AndroidManifest.xml` should be updated immediately. If not, you can force it by removing and re-adding Android platform:
 
@@ -51,7 +51,7 @@ Current version allows also to set allowed key codes, so you app can enable volu
 
     KioskPlugin.setAllowedKeys([ 24, 25 ]);
 
-For complete example see: https://github.com/honza889/cordova-kiosk-demo
+For complete example see: https://github.com/hkalina/cordova-kiosk-demo
 
 Tips
 ----
