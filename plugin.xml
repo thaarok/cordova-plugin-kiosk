@@ -46,11 +46,7 @@
                     <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
                     <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
                 </intent-filter>
-            </activity>
-
-            <!-- inner activity, replacement of MainActivity with buttons blocked -->
-            <activity android:label="Kiosk activity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
-            </activity>
+            </activity
 
             <!-- autorun after the app APK is updated -->
             <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
@@ -59,6 +55,13 @@
                 </intent-filter>
             </receiver>
         </config-file>
+
+        <!-- replace default MainActivity to avoid double instances of WebView -->
+        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="overwrite">
+          <!-- inner activity, replacement of MainActivity with buttons blocked -->
+          <activity android:label="Kiosk activity" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
+          </activity>
+        </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
                 <uses-permission android:name="android.permission.REORDER_TASKS"/>
