@@ -3,7 +3,8 @@ android:
   components:
     - tools
     - platform-tools
-    - tools
+    - build-tools-26.0.2
+    - android-26
 before_install:
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   - sudo apt-get install -y nodejs
@@ -14,4 +15,4 @@ script:
   - cordova platform add android
   - cordova plugin add ..
   - cordova build android
-  - cd ..
+  - test -f platforms/android/app/build/outputs/apk/debug/app-debug.apk
