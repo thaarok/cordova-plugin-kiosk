@@ -4,7 +4,9 @@ var exec = require('cordova/exec');
 var KioskPlugin = {
     
     exitKiosk: function () {
-        exec(null, null, "KioskPlugin", "exitKiosk", []);
+        exec(function () {}, function (error) {
+            alert("KioskPlugin.exitKiosk failed: " + error);
+        }, "KioskPlugin", "exitKiosk", []);
     },
     
     isInKiosk: function (callback) {
@@ -12,9 +14,9 @@ var KioskPlugin = {
             callback(false); // ios not supported - cannot be in kiosk
             return;
         }
-        exec(function(out){
+        exec(function (out) {
             callback(out == "true");
-        }, function(error){
+        }, function (error) {
             alert("KioskPlugin.isInKiosk failed: " + error);
         }, "KioskPlugin", "isInKiosk", []);
     },
@@ -24,15 +26,17 @@ var KioskPlugin = {
             callback(false); // ios not supported - cannot be in kiosk
             return;
         }
-        exec(function(out){
+        exec(function (out) {
             callback(out == "true");
-        }, function(error){
+        }, function (error) {
             alert("KioskPlugin.isSetAsLauncher failed: " + error);
         }, "KioskPlugin", "isSetAsLauncher", []);
     },
     
     setAllowedKeys: function (keyCodes) {
-        exec(null, null, "KioskPlugin", "setAllowedKeys", keyCodes);
+        exec(function () {}, function (error) {
+            alert("KioskPlugin.setAllowedKeys failed: " + error);
+        }, "KioskPlugin", "setAllowedKeys", keyCodes);
     }
     
 }
