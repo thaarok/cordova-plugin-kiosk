@@ -67,6 +67,7 @@ Tips
 * **To disable screenlock: ("slide to unlock")**
  * **Alcatel:** Settings - Security - Set up screen lock - None
  * **Xiaomi:** Settings - Additional settings - Developer options - Skip screen lock
+ * **Huawei:** Settings - Apps - Default App Settings - Launcher
 
 **"Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occurred**
 
@@ -75,4 +76,10 @@ Tips
 * Another reason can be too long loading of `index.html` -- you can set timeout of Cordova's WebView in `config.xml` of application: (value is in milliseconds)
 
         <preference name="loadUrlTimeoutValue" value="60000" />
+New Features:
+----
+* Disabled the Quick Setting panel
 
+To-Do:
+----
+[ ] Disable the back button functionality 
