@@ -20,22 +20,27 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class KioskActivity extends CordovaActivity {
-    
+
     public static volatile boolean running = false;
     public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
-    
+
+    private StatusBarOverlay statusBarOverlay = null;
+
+    @Override
     protected void onStart() {
         super.onStart();
         System.out.println("KioskActivity started");
         running = true;
     }
-    
+
+    @Override
     protected void onStop() {
         super.onStop();
         System.out.println("KioskActivity stopped");
         running = false;
     }
-    
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.init();
@@ -58,14 +63,26 @@ public class KioskActivity extends CordovaActivity {
         // status bar is hidden, so hide that too if necessary.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.hide();
+        
+        // add overlay to prevent statusbar access by swiping
+        statusBarOverlay = StatusBarOverlay.create(this);
     }
-    
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (statusBarOverlay != null) {
+            statusBarOverlay.destroy(this);
+            statusBarOverlay = null;
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         System.out.println("onKeyDown event: keyCode = " + event.getKeyCode());
         return ! allowedKeys.contains(event.getKeyCode()); // prevent event from being propagated if not allowed
     }
-    
+
     // http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
