@@ -1,62 +1,73 @@
 Cordova Kiosk Mode
 ==================
 
-Cordova plugin to create Cordova application with "kiosk mode".
-App with this plugin can be set as Android launcher.
-If app starts as launcher, it blocks hardware buttons and statusbar,
-so the user cannot close the app until the app request it.
+A Cordova plugin to create a Cordova application with "kiosk mode".
+An app with this plugin can be set as an Android launcher.
+If the app starts as a launcher, it blocks hardware buttons and statusbar,
+so an user cannot close the app until the app request it.
 
 **This plugin does not change behavior of application until it is set as launcher - home screen of the device.**
 
-Escape from app with this plugin is possible only using javascript call `KioskPlugin.exitKiosk()`
-or by uninstalling app using `adb`. (Keeping USB debug allowed recommended.)
-If applications starts as usual (not as launcher), no restrictions are applied.
+Escape from the app is possible only using javascript call `KioskPlugin.exitKiosk()`
+or by uninstalling the app using `adb`. (Keeping USB debug allowed necessary.)
+If the application starts as usual (not as a launcher), no restrictions are applied.
 
 * Official plugin website: https://github.com/hkalina/cordova-plugin-kiosk
 * Example app: https://github.com/hkalina/cordova-kiosk-demo
 
-**Note for iOS:** This plugin is for Android only for now. Support of iOS would be useless, because this feature is built in iOS as Guided Access (see Settings - General - Accessibility - Guided Access)
+This plugin is for Android platform only. For kiosk on iOS platform check its Guided Access feature.
 
 About
 -----
 
-By adding this Cordova plugin the Cordova app becomes the the homescreen (also known as launcher) of Android device and will block any atempt of user to escape.
+By adding this Cordova plugin the Cordova app becomes a homescreen (also known as a launcher) of Android device and should block any attempt of user to leave it.
 
-To add plugin into existing Cordova / Phonegap application:
+To add plugin into existing Cordova / Phonegap application use:
 
     cordova plugin add https://github.com/hkalina/cordova-plugin-kiosk.git
 
-The `AndroidManifest.xml` should be updated immediately. If not, you can force it by removing and re-adding Android platform:
+To add specific version of this plugin (like `v2.0`) use:
+
+    cordova plugin add https://github.com/hkalina/cordova-plugin-kiosk.git#v2.0
+
+Android platform files (like `AndroidManifest.xml`) should be updated immediately. If you will modify plugin code, you will need to re-add android platform to plugin modifications take effect:
 
     cordova platform rm android
     cordova platform add android
 
-To it work user have to **set this application as launcher** (see below) and start it by pressing Home button/by restarting device.
+To has it working, user have to **set this application as launcher** (see below) and start it by pressing Home button or by restarting the device.
 
-**WARNING** Before installation ensure you have USB debug mode enabled. Without it you can have problem to remove app from device.
+**WARNING** Before installation ensure you have USB debug mode enabled. Without USB debug enabled you can get stuck in broken kiosk application.
 
-Exiting from Kiosk mode using Javascript:
+Short API description
+---------------------
+
+**Exiting** from Kiosk mode using Javascript in the page (for hidden/authenticated button to escape the kiosk application):
 
     KioskPlugin.exitKiosk();
 
-If the app is running in kiosk mode can be detected too:
+**Detecting** whether the app is successfly running in kiosk mode (kiosk activity is opened):
 
     KioskPlugin.isInKiosk(function(isInKiosk){ ... });
 
-By similar way it is possible to detect whether is application set as launcher:
+**Detecting** whether the app (kiosk activity) is set as launcher:
 
     KioskPlugin.isSetAsLauncher(function(isLauncher){ ... });
 
-Current version allows also to set allowed key codes, so you app can enable volume up/down buttons for example:
+The device is effectively locked only when both methods returns `true`. When the app is "in kiosk", but not set as a launcher, user can escape the app by pressing a Home button (but other buttons are still locked).
 
-    KioskPlugin.setAllowedKeys([ 24, 25 ]);
+**Defining allowed buttons** - buttons whose event propagation should not be prevented - so you can for example allow setting volume up/down:
 
-For complete example see: https://github.com/hkalina/cordova-kiosk-demo
+    KioskPlugin.setAllowedKeys([ 24, 25 ]); // KEYCODE_VOLUME_UP, KEYCODE_VOLUME_DOWN
+
+For list of keycode values check KeyEvent reference: https://developer.android.com/reference/android/view/KeyEvent#KEYCODE_0
+
+For complete example application check: https://github.com/hkalina/cordova-kiosk-demo
 
 Tips
 ----
 
-* **To remove this application use `adb`:** (Do not install it without USB debug mode enabled!) (com.example.hello replace with package of your app from your config.xml)
+* **To remove this application use `adb`:** (Do not install it without USB debug mode enabled!) (com.example.hello replace with package of your app defined in your config.xml)
 
         $ANDROID_HOME/platform-tools/adb uninstall com.example.hello
 
@@ -70,9 +81,7 @@ Tips
 
 **"Application Error - The connection to the server was unsuccessful. (file:///android_asset/www/index.html)" occurred**
 
-* This can occur when Cordova's MainActivity is started too soon after system boot-up. Because this is native HomeActivity here - if you will see this error message, try increase delay in `timer.schedule` in `HomeActivity.java`.
-* Another reason can be the `index.html` is missing.
-* Another reason can be too long loading of `index.html` -- you can set timeout of Cordova's WebView in `config.xml` of application: (value is in milliseconds)
+* One reason can be too long loading of `index.html` - you can set timeout of Cordova's WebView in `config.xml` of application: (value is in milliseconds)
 
         <preference name="loadUrlTimeoutValue" value="60000" />
 
