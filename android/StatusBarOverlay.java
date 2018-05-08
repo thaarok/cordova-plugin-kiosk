@@ -2,7 +2,11 @@ package jk.cordova.plugin.kiosk;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -11,6 +15,8 @@ import android.view.WindowManager;
 // from https://github.com/ngocdaothanh/cordova-plugin-unswipable-android-status-bar
 // http://stackoverflow.com/questions/25284233/prevent-status-bar-for-appearing-android-modified
 public class StatusBarOverlay extends ViewGroup {
+
+    private static final int OVERLAY_PERMISSION_REQ_CODE = 4545;
 
     public StatusBarOverlay(Context context) {
         super(context);
@@ -47,6 +53,21 @@ public class StatusBarOverlay extends ViewGroup {
 
         System.out.println("Installing StatusBarOverlay");
         return view;
+    }
+    
+    static StatusBarOverlay createOrObtainPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // added in API level 23
+            if (! Settings.canDrawOverlays(activity)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
+                activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                return null;
+            } else {
+                return create(activity);
+            }
+        } else {
+            return create(activity);
+        }
     }
     
     void destroy(Activity activity) {
