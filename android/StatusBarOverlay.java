@@ -56,18 +56,18 @@ public class StatusBarOverlay extends ViewGroup {
     }
     
     static StatusBarOverlay createOrObtainPermission(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // added in API level 23
-            if (! Settings.canDrawOverlays(activity)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
-                activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
-                return null;
-            } else {
-                return create(activity);
-            }
-        } else {
-            return create(activity);
+        if (Build.VERSION.SDK_INT >= 23) { // added in API level 23
+            try {
+                Method canDrawOverlays = Settings.class.getMethod("canDrawOverlays", Activity.class);
+                if (! (Boolean)canDrawOverlays.invoke(null, activity)) {
+                    Intent intent = new Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", //Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+                        Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
+                    activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                    return null;
+                }
+            } catch (Throwable t) {}
         }
+        return create(activity);
     }
     
     void destroy(Activity activity) {
