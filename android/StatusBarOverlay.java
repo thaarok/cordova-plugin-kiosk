@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import java.lang.reflect.Method;
 
 // from https://github.com/ngocdaothanh/cordova-plugin-unswipable-android-status-bar
 // http://stackoverflow.com/questions/25284233/prevent-status-bar-for-appearing-android-modified
