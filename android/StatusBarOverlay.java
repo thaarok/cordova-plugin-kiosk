@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import java.lang.reflect.Method;
 
 // from https://github.com/ngocdaothanh/cordova-plugin-unswipable-android-status-bar
 // http://stackoverflow.com/questions/25284233/prevent-status-bar-for-appearing-android-modified
@@ -56,18 +57,21 @@ public class StatusBarOverlay extends ViewGroup {
     }
     
     static StatusBarOverlay createOrObtainPermission(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // added in API level 23
-            if (! Settings.canDrawOverlays(activity)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
-                activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+        if (Build.VERSION.SDK_INT >= 23) { // added in API level 23
+            try {
+                Method canDrawOverlays = Settings.class.getMethod("canDrawOverlays", Context.class);
+                if (! (Boolean)canDrawOverlays.invoke(null, activity)) {
+                    Intent intent = new Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", //Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+                        Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
+                    activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 return null;
-            } else {
-                return create(activity);
             }
-        } else {
-            return create(activity);
         }
+        return create(activity);
     }
     
     void destroy(Activity activity) {
