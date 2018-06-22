@@ -59,14 +59,17 @@ public class StatusBarOverlay extends ViewGroup {
     static StatusBarOverlay createOrObtainPermission(Activity activity) {
         if (Build.VERSION.SDK_INT >= 23) { // added in API level 23
             try {
-                Method canDrawOverlays = Settings.class.getMethod("canDrawOverlays", Activity.class);
+                Method canDrawOverlays = Settings.class.getMethod("canDrawOverlays", Context.class);
                 if (! (Boolean)canDrawOverlays.invoke(null, activity)) {
                     Intent intent = new Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", //Settings.ACTION_MANAGE_OVERLAY_PERMISSION
                         Uri.parse("package:" + activity.getApplicationContext().getPackageName()));
                     activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
                     return null;
                 }
-            } catch (Throwable t) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         return create(activity);
     }
