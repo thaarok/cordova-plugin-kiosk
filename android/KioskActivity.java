@@ -78,6 +78,14 @@ public class KioskActivity extends CordovaActivity {
     }
 
     @Override
+    protected void onPause() {
+            super.onPause();
+            ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+            activityManager.moveTaskToFront(getTaskId(), 0);
+    }     
+    
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         System.out.println("onKeyDown event: keyCode = " + event.getKeyCode());
         return ! allowedKeys.contains(event.getKeyCode()); // prevent event from being propagated if not allowed
