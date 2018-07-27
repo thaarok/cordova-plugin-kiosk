@@ -71,4 +71,18 @@
 
     </platform>
 
+	<!-- windows -->
+    <platform name="windows">
+	    <js-module src="windows/KioskPlugin.js" name="KioskPlugin">
+            <runs />
+        </js-module>
+	    <config-file target="package.appxmanifest" parent="/Package/Applications/Application">  
+			<Extensions>
+				<uap:Extension Category="windows.lockScreenCall" />
+				<uap:Extension Category="windows.aboveLockScreen" />
+			</Extensions>
+		</config-file>
+
+    </platform>
+	
 </plugin>
