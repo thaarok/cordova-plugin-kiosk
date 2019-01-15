@@ -49,6 +49,10 @@ public class StatusBarOverlay extends ViewGroup {
         localLayoutParams.height = (int) (50 * activity.getResources().getDisplayMetrics().scaledDensity);
         localLayoutParams.format = PixelFormat.TRANSPARENT;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            localLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }
+
         StatusBarOverlay view = new StatusBarOverlay(activity);
         manager.addView(view, localLayoutParams);
 
