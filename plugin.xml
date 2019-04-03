@@ -57,17 +57,25 @@
                     <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 </intent-filter>
             </receiver>
+            <receiver android:name="jk.cordova.plugin.kiosk.BootCompletedReceiver">
+                <intent-filter android:priority="999">
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
+                    <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                </intent-filter>
+            </receiver>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
                 <uses-permission android:name="android.permission.REORDER_TASKS"/>
                 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+                <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         </config-file>
 
         <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/MyPackageReplacedEventReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/StatusBarOverlay.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="android/BootCompletedReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
 
     </platform>
 
