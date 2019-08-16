@@ -1,15 +1,12 @@
 language: android
-android:
-  components:
-    - tools
-    - platform-tools
-    - build-tools-26.0.2
-    - android-26
+
+node_js:
+  - lts/*
+
 before_install:
-  - yes | sdkmanager "platforms;android-26"
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
-  - sudo npm install -g cordova
+  - npm install -g cordova
+  - echo y | android update sdk -u --filter android-26
+
 script:
   - cordova create hello com.example.hello HelloWorld
   - cd hello
@@ -17,3 +14,4 @@ script:
   - cordova plugin add ..
   - cordova build android
   - test -f platforms/android/app/build/outputs/apk/debug/app-debug.apk
+
